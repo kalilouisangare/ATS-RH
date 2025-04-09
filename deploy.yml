@@ -1,0 +1,43 @@
+name: Deploy Streamlit App
+
+on:
+  push:
+    branches: ["main"]  # Déclenche le workflow sur un push vers "main"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Étape 1 : Récupère le code du dépôt
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Étape 2 : Configure Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      # Étape 3 : Installe les dépendances
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install streamlit
+
+      # Étape 4 : Exécute des tests (optionnel)
+      - name: Run tests
+        env:
+          GOOGLE_API_KEY: ${{ "AIzaSyDcQXmJPlMH3C34YomL-JzdOmKDI1G3Boc" }}  # Injecte les secrets
+        run: |
+          python -m pytest tests/
+
+      # Étape 5 : Déploie sur Streamlit (exemple avec un script personnalisé)
+      - name: Deploy to Streamlit
+        env:
+          GOOGLE_API_KEY: ${{ "AIzaSyDcQXmJPlMH3C34YomL-JzdOmKDI1G3Boc" }}
+          DB_PASSWORD: ${{ "AIzaSyDcQXmJPlMH3C34YomL-JzdOmKDI1G3Boc" }}
+        run: |
+          # Ici, ajoutez la logique pour déployer (ex: CLI d'un hébergeur)
+          # Exemple fictif pour illustrer :
+          echo "Déploiement avec les variables sécurisées 🚀"
