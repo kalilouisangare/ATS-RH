@@ -65,19 +65,19 @@ description:{job_description}
 Je souhaite que la réponse se présente en français et sous la forme d'une seule chaîne de caractères ayant la structure suivante
  
 {{  "Job Description Match":"%",
-    "Missing Keywords":"",
-    "Candidate Summary":"",
+    "Mots manquants":"",
+    "Resume candidat":"",
     "Experience":""}}
 """
 
 # Streamlit app
 # Initialize Streamlit app
-st.title("Intelligent ATS-Enhance Your Resume ATS")
+st.title("Analyser votre CV avec Intelligent - ATS")
 st.markdown('<style>h1{color: orange; text-align: center;}</style>', unsafe_allow_html=True)
-job_description = st.text_area("Paste the Job Description",height=300)
-uploaded_file = st.file_uploader("Upload Your Resume", type=["pdf", "docx"], help="Please upload a PDF or DOCX file")
+job_description = st.text_area("Copier-Coller ici la description du poste",height=300)
+uploaded_file = st.file_uploader("Charger votre CV ici", type=["pdf", "docx"], help="Document autorise PDF ou Word")
 
-submit_button = st.button("Submit")
+submit_button = st.button("Analyser votre CV")
 
 if submit_button:
     if uploaded_file is not None:
@@ -93,12 +93,12 @@ if submit_button:
         # Remove percentage symbol and convert to float
         match_percentage = float(match_percentage_str.rstrip('%'))
 
-        st.subheader("ATS Evaluation Result:")
+        st.subheader("Résultat Evaluation ATS:")
         st.write(response_text)
-        #st.write(f'{{\n"Job Description Match": "{match_percentage}%",\n"Missing Keywords": "",\n"Candidate Summary": "",\n"Experience": ""\n}}')
+        #st.write(f'{{\n"Job Description Match": "{match_percentage}%",\n"Mots manquants": "",\n"Resume candidat": "",\n"Experience": ""\n}}')
 
         # Display message based on Job Description Match percentage
         if match_percentage >= 80:
             st.text("Poursuivre l'embauche")
         else:
-            st.text(" Pas de correspondance ")
+            st.text(" Vous ne correspondez pas au poste ")
